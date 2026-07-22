@@ -1,0 +1,63 @@
+{
+    "name": "html2img/craft-og-images",
+    "description": "Automatic Open Graph images for Craft CMS entries, rendered in real Chrome by the HTML to Image API",
+    "type": "craft-plugin",
+    "license": "MIT",
+    "keywords": [
+        "craft",
+        "craftcms",
+        "craft-plugin",
+        "open graph",
+        "og image",
+        "social share image",
+        "html to image"
+    ],
+    "support": {
+        "issues": "https://github.com/html2img/craft-og-images/issues",
+        "source": "https://github.com/html2img/craft-og-images",
+        "docs": "https://github.com/html2img/craft-og-images"
+    },
+    "require": {
+        "php": "^8.3",
+        "craftcms/cms": "^5.10",
+        "html2img/html2img-php": "^1.1"
+    },
+    "require-dev": {
+        "craftcms/ecs": "dev-main",
+        "craftcms/phpstan": "dev-main",
+        "pestphp/pest": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "html2img\\ogimages\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "html2img\\ogimages\\tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest",
+        "phpstan": "phpstan --memory-limit=1G",
+        "check-cs": "ecs check --ansi",
+        "fix-cs": "ecs check --ansi --fix"
+    },
+    "config": {
+        "allow-plugins": {
+            "craftcms/plugin-installer": true,
+            "yiisoft/yii2-composer": true,
+            "pestphp/pest-plugin": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "handle": "og-images",
+        "name": "Auto Open Graph Images",
+        "developer": "HTML to Image",
+        "developerUrl": "https://html2img.com",
+        "documentationUrl": "https://github.com/html2img/craft-og-images"
+    }
+}

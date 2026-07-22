@@ -1,0 +1,155 @@
+{# The bundled Open Graph card. Point the template setting at your own
+   template to replace it. Everything here is self-contained: system and
+   Google Fonts only, no local assets, so it renders identically in the
+   browser preview and on the HTML to Image servers. #}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100vw; height: 100vh; overflow: hidden; }
+    body {
+        font-family: 'Inter', -apple-system, sans-serif;
+        background: #0b1220;
+        color: #f8fafc;
+        position: relative;
+    }
+    .glow {
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(42vw 42vw at 88% -12%, rgba(99, 102, 241, 0.32), transparent 65%),
+            radial-gradient(38vw 38vw at -8% 112%, rgba(34, 211, 238, 0.16), transparent 65%);
+    }
+    .grid {
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(148, 163, 184, 0.13) 0.09vw, transparent 0.09vw);
+        background-size: 2.4vw 2.4vw;
+        mask-image: linear-gradient(115deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.25));
+        -webkit-mask-image: linear-gradient(115deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.25));
+    }
+    .card {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 5.4vw 6vw;
+        display: flex;
+        flex-direction: column;
+    }
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 1.3vw;
+    }
+    .brand img {
+        max-height: 4.2vw;
+        max-width: 22vw;
+    }
+    .brand-mark {
+        width: 1.1vw;
+        height: 1.1vw;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #818cf8, #22d3ee);
+    }
+    .brand-name {
+        font-size: 1.7vw;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #94a3b8;
+    }
+    .headline-block { margin-top: auto; }
+    .accent {
+        width: 5vw;
+        height: 0.5vw;
+        border-radius: 0.25vw;
+        background: linear-gradient(90deg, #818cf8, #22d3ee);
+        margin-bottom: 2.6vw;
+    }
+    h1 {
+        font-family: 'Sora', 'Inter', sans-serif;
+        font-weight: 700;
+        letter-spacing: -0.022em;
+        line-height: 1.08;
+        max-width: 82vw;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .subtitle {
+        margin-top: 1.8vw;
+        font-size: 2.1vw;
+        font-weight: 400;
+        line-height: 1.4;
+        color: #cbd5e1;
+        max-width: 68vw;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .foot {
+        margin-top: auto;
+        padding-top: 3vw;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .date {
+        font-size: 1.6vw;
+        font-weight: 500;
+        color: #64748b;
+    }
+    .dots { display: flex; gap: 0.7vw; }
+    .dots span {
+        width: 0.75vw;
+        height: 0.75vw;
+        border-radius: 50%;
+    }
+    .dots span:nth-child(1) { background: #818cf8; }
+    .dots span:nth-child(2) { background: #38bdf8; opacity: 0.75; }
+    .dots span:nth-child(3) { background: #22d3ee; opacity: 0.5; }
+</style>
+</head>
+{% set headlineLength = ogHeadline|length %}
+{% if headlineLength > 95 %}
+    {% set headlineSize = '4.6vw' %}
+{% elseif headlineLength > 65 %}
+    {% set headlineSize = '5.4vw' %}
+{% elseif headlineLength > 38 %}
+    {% set headlineSize = '6.2vw' %}
+{% else %}
+    {% set headlineSize = '7.2vw' %}
+{% endif %}
+<body>
+<div class="glow"></div>
+<div class="grid"></div>
+<div class="card">
+    <div class="brand">
+        {% if siteLogo %}
+            <img src="{{ siteLogo }}" alt="">
+        {% else %}
+            <div class="brand-mark"></div>
+        {% endif %}
+        <div class="brand-name">{{ siteName }}</div>
+    </div>
+    <div class="headline-block">
+        <div class="accent"></div>
+        <h1 style="font-size: {{ headlineSize }}">{{ ogHeadline }}</h1>
+        {% if ogSubtitle %}
+            <div class="subtitle">{{ ogSubtitle }}</div>
+        {% endif %}
+    </div>
+    <div class="foot">
+        <div class="date">{{ (entry.postDate ?? now)|date('j F Y') }}</div>
+        <div class="dots"><span></span><span></span><span></span></div>
+    </div>
+</div>
+</body>
+</html>

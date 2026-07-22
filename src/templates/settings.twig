@@ -1,0 +1,215 @@
+{% import '_includes/forms' as forms %}
+
+{{ forms.autosuggestField({
+    label: 'API key'|t('og-images'),
+    instructions: 'Your HTML to Image API key. Free accounts include monthly credits, register at [app.html2img.com](https://app.html2img.com/register). Best kept in an environment variable.'|t('og-images'),
+    id: 'apiKey',
+    name: 'apiKey',
+    value: settings.apiKey,
+    suggestEnvVars: true,
+    errors: settings.getErrors('apiKey'),
+}) }}
+
+<hr>
+
+{{ forms.checkboxSelectField({
+    label: 'Sections'|t('og-images'),
+    instructions: 'Images are generated for entries in these sections.'|t('og-images'),
+    id: 'sections',
+    name: 'sections',
+    options: sectionOptions,
+    values: settings.sections,
+    errors: settings.getErrors('sections'),
+}) }}
+
+{{ forms.textField({
+    label: 'Template'|t('og-images'),
+    instructions: 'The Twig template rendered for each card, for example `_og/card`. The bundled default lives at `og-images/_default`.'|t('og-images'),
+    id: 'template',
+    name: 'template',
+    value: settings.template,
+    required: true,
+    errors: settings.getErrors('template'),
+}) }}
+
+<div class="flex">
+    {{ forms.textField({
+        label: 'Width'|t('og-images'),
+        id: 'width',
+        name: 'width',
+        value: settings.width,
+        type: 'number',
+        size: 6,
+        required: true,
+        errors: settings.getErrors('width'),
+    }) }}
+    {{ forms.textField({
+        label: 'Height'|t('og-images'),
+        id: 'height',
+        name: 'height',
+        value: settings.height,
+        type: 'number',
+        size: 6,
+        required: true,
+        errors: settings.getErrors('height'),
+    }) }}
+    {{ forms.textField({
+        label: 'DPI'|t('og-images'),
+        instructions: '1 to 3. 2 keeps text crisp.'|t('og-images'),
+        id: 'dpi',
+        name: 'dpi',
+        value: settings.dpi,
+        type: 'number',
+        size: 6,
+        required: true,
+        errors: settings.getErrors('dpi'),
+    }) }}
+</div>
+
+{% set overrideRows = [] %}
+{% for handle, override in settings.overrides %}
+    {% set overrideRows = overrideRows|merge([{
+        section: handle,
+        template: override.template ?? '',
+        width: override.width ?? '',
+        height: override.height ?? '',
+        dpi: override.dpi ?? '',
+    }]) %}
+{% endfor %}
+
+{{ forms.editableTableField({
+    label: 'Section overrides'|t('og-images'),
+    instructions: 'Override the template or dimensions for individual sections. Blank cells inherit the defaults above.'|t('og-images'),
+    id: 'overrides',
+    name: 'overrides',
+    cols: {
+        section: { heading: 'Section'|t('og-images'), type: 'select', options: sectionOptions },
+        template: { heading: 'Template'|t('og-images'), type: 'singleline' },
+        width: { heading: 'Width'|t('og-images'), type: 'number' },
+        height: { heading: 'Height'|t('og-images'), type: 'number' },
+        dpi: { heading: 'DPI'|t('og-images'), type: 'number' },
+    },
+    rows: overrideRows,
+    allowAdd: true,
+    allowDelete: true,
+    allowReorder: false,
+    addRowLabel: 'Add an override'|t('og-images'),
+}) }}
+
+<hr>
+
+{{ forms.selectField({
+    label: 'Storage'|t('og-images'),
+    instructions: '`cdn` stores the image URL the API returns. `asset` downloads the PNG into a volume, so the site never depends on the API at runtime.'|t('og-images'),
+    id: 'storage',
+    name: 'storage',
+    options: [
+        { label: 'CDN URL'|t('og-images'), value: 'cdn' },
+        { label: 'Asset volume'|t('og-images'), value: 'asset' },
+    ],
+    value: settings.storage,
+    errors: settings.getErrors('storage'),
+}) }}
+
+{{ forms.selectField({
+    label: 'Volume'|t('og-images'),
+    instructions: 'Where downloaded PNGs are stored in asset mode.'|t('og-images'),
+    id: 'volume',
+    name: 'volume',
+    options: volumeOptions,
+    value: settings.volume,
+    errors: settings.getErrors('volume'),
+}) }}
+
+{{ forms.selectField({
+    label: 'Integration'|t('og-images'),
+    instructions: '`standalone` emits the meta tags itself. `seo-field` writes the generated image into an asset field so SEOmatic or Ether SEO keep owning the head. The seo-field mode always stores images as assets.'|t('og-images'),
+    id: 'integration',
+    name: 'integration',
+    options: [
+        { label: 'Standalone meta tags'|t('og-images'), value: 'standalone' },
+        { label: 'SEO plugin field'|t('og-images'), value: 'seo-field' },
+    ],
+    value: settings.integration,
+    errors: settings.getErrors('integration'),
+}) }}
+
+{{ forms.textField({
+    label: 'SEO field handle'|t('og-images'),
+    instructions: 'The asset field written to in seo-field mode.'|t('og-images'),
+    id: 'seoField',
+    name: 'seoField',
+    value: settings.seoField,
+    errors: settings.getErrors('seoField'),
+}) }}
+
+<hr>
+
+{{ forms.textField({
+    label: 'Site name'|t('og-images'),
+    instructions: 'Passed to the card template. Falls back to the Craft site name.'|t('og-images'),
+    id: 'siteName',
+    name: 'siteName',
+    value: settings.siteName,
+    errors: settings.getErrors('siteName'),
+}) }}
+
+{{ forms.autosuggestField({
+    label: 'Site logo URL'|t('og-images'),
+    instructions: 'An absolute, publicly reachable URL. The API renders on its own servers, so local-only URLs come out missing.'|t('og-images'),
+    id: 'siteLogo',
+    name: 'siteLogo',
+    value: settings.siteLogo,
+    suggestEnvVars: true,
+    errors: settings.getErrors('siteLogo'),
+}) }}
+
+{{ forms.autosuggestField({
+    label: 'Fallback image URL'|t('og-images'),
+    instructions: 'Used when an entry has no generated image and no editor-chosen image.'|t('og-images'),
+    id: 'fallbackImage',
+    name: 'fallbackImage',
+    value: settings.fallbackImage,
+    suggestEnvVars: true,
+    errors: settings.getErrors('fallbackImage'),
+}) }}
+
+{{ forms.textField({
+    label: 'Editor image field'|t('og-images'),
+    instructions: 'Handle of an asset field. When an editor picks an image there, it wins over the generated one in the output.'|t('og-images'),
+    id: 'imageField',
+    name: 'imageField',
+    value: settings.imageField,
+    errors: settings.getErrors('imageField'),
+}) }}
+
+{{ forms.lightswitchField({
+    label: 'Regenerate on bulk resaves'|t('og-images'),
+    instructions: 'Off by default, so `resave/entries` and similar bulk operations spend no credits.'|t('og-images'),
+    id: 'regenerateOnResave',
+    name: 'regenerateOnResave',
+    on: settings.regenerateOnResave,
+}) }}
+
+<hr>
+
+{% set previewUrl = cpUrl('og-images/preview') %}
+
+<div class="field">
+    <div class="heading">
+        <label>{{ 'Preview'|t('og-images') }}</label>
+        <div class="instructions">
+            <p>{{ 'The current template with sample data, rendered by your browser exactly as the API would see it. Save the settings to refresh it.'|t('og-images') }}
+            <a href="{{ previewUrl }}" target="_blank">{{ 'Open at full size'|t('og-images') }}</a></p>
+        </div>
+    </div>
+    <div style="width: {{ settings.width / 2 }}px; height: {{ settings.height / 2 }}px; max-width: 100%; overflow: hidden; border-radius: 6px; box-shadow: 0 0 0 1px rgba(96, 125, 159, 0.25);">
+        <iframe
+            src="{{ previewUrl }}"
+            width="{{ settings.width }}"
+            height="{{ settings.height }}"
+            style="border: 0; transform: scale(0.5); transform-origin: 0 0;"
+            title="{{ 'Card preview'|t('og-images') }}"
+        ></iframe>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+{# Sidebar panel on the entry edit screen. #}
+<fieldset>
+    <legend class="h6">{{ 'Open Graph image'|t('og-images') }}</legend>
+    <div class="meta read-only" style="padding-top: 10px; padding-bottom: 10px;">
+        {% if imageUrl %}
+            <div style="width: 100%;">
+                <a href="{{ imageUrl }}" target="_blank" rel="noopener">
+                    <img src="{{ imageUrl }}" alt="{{ 'Generated Open Graph image'|t('og-images') }}"
+                         style="display: block; width: 100%; border-radius: 4px;">
+                </a>
+                {% if record %}
+                    <p class="light" style="margin: 6px 0 0;">
+                        {{ 'Generated {date}'|t('og-images', { date: record.dateUpdated|datetime('short') }) }}
+                    </p>
+                {% endif %}
+            </div>
+        {% else %}
+            <p class="light" style="margin: 0;">{{ 'Not generated yet.'|t('og-images') }}</p>
+        {% endif %}
+
+        {% if not static %}
+            <div style="margin-top: 10px;">
+                <button type="button"
+                        class="btn small h2i-og-generate"
+                        data-element-id="{{ elementId }}"
+                        data-site-id="{{ entry.siteId }}">
+                    {{ 'Generate'|t('og-images') }}
+                </button>
+            </div>
+        {% endif %}
+    </div>
+</fieldset>
+
+{% if not static %}
+    {% js %}
+    if (!window.h2iOgGenerateBound) {
+        window.h2iOgGenerateBound = true;
+        document.addEventListener('click', function(event) {
+            var btn = event.target.closest('.h2i-og-generate');
+            if (!btn || btn.classList.contains('loading')) {
+                return;
+            }
+            btn.classList.add('loading');
+            Craft.sendActionRequest('POST', 'og-images/generate', {
+                data: {
+                    elementId: btn.getAttribute('data-element-id'),
+                    siteId: btn.getAttribute('data-site-id'),
+                },
+            }).then(function(response) {
+                Craft.cp.displayNotice(response.data.message || Craft.t('og-images', 'Image generated.'));
+                window.location.reload();
+            }).catch(function(error) {
+                var message = (error.response && error.response.data && error.response.data.message)
+                    || Craft.t('og-images', 'Generation failed.');
+                Craft.cp.displayError(message);
+                btn.classList.remove('loading');
+            });
+        });
+    }
+    {% endjs %}
+{% endif %}
