@@ -13,9 +13,9 @@
         "html to image"
     ],
     "support": {
-        "issues": "https://github.com/html2img/craft-og-images/issues",
-        "source": "https://github.com/html2img/craft-og-images",
-        "docs": "https://github.com/html2img/craft-og-images"
+        "issues": "https://github.com/html2img/html2img-craft/issues",
+        "source": "https://github.com/html2img/html2img-craft",
+        "docs": "https://github.com/html2img/html2img-craft"
     },
     "require": {
         "php": "^8.3",
@@ -58,6 +58,6 @@
         "name": "Auto Open Graph Images",
         "developer": "HTML to Image",
         "developerUrl": "https://html2img.com",
-        "documentationUrl": "https://github.com/html2img/craft-og-images"
+        "documentationUrl": "https://github.com/html2img/html2img-craft"
     }
 }
