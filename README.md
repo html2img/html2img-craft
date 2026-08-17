@@ -195,7 +195,7 @@ composer fix-cs    # fix code style
 
 ## Links
 
-[Website](https://html2img.com) · [Documentation](https://html2img.com/docs) · [Templates](https://html2img.com/templates) · [Pricing](https://html2img.com/pricing) · [PHP SDK](https://github.com/html2img/html2img-php)
+[HTML to Image API](https://html2img.com) · [Screenshot API](https://html2img.com/screenshot-api/) · [HTML to PDF API](https://html2img.com/html-to-pdf/) · [Documentation](https://html2img.com/docs) · [Craft CMS guide](https://html2img.com/integrations/craft/) · [Templates](https://html2img.com/templates) · [Pricing](https://html2img.com/pricing) · [PHP SDK](https://github.com/html2img/html2img-php)
 
 ## Licence
 
