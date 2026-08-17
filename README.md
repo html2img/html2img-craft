@@ -35,7 +35,7 @@ Add your API key to `.env`:
 HTML2IMG_API_KEY="your-key-here"
 ```
 
-The key travels in the `X-API-Key` header, as described in the [authentication docs](https://html2img.com/docs/authentication). Requests go through the official [html2img/html2img-php](https://github.com/html2img/html2img-php) SDK, the same client covered in the [PHP usage guide](https://html2img.com/docs/usage/php).
+The key travels in the `X-API-Key` header, as described in the [authentication docs](https://html2img.com/docs/authentication). Requests go through the official [html2img/html2img-php](https://github.com/html2img/html2img-php) SDK, the same client covered in the [PHP integration guide](https://html2img.com/integrations/php/).
 
 Then open **Settings → Auto Open Graph Images** in the control panel, choose the sections to generate images for and save. From that point every save of an entry in those sections queues a render.
 
