@@ -1,6 +1,6 @@
 # Auto Open Graph Images for Craft CMS
 
-> **You need an API key.** Accounts are free and include a monthly allowance of credits that renews automatically. **[Create your free account at app.html2img.com](https://app.html2img.com/register)**, copy your key and you are ready to render.
+> **You need an API key.** Accounts are free and start with 50 credits, a one-time allowance that needs no card. **[Create your free account at app.html2img.com](https://app.html2img.com/register)**, copy your key and you are ready to render.
 
 Auto Open Graph Images generates social share images for your Craft CMS entries with the [HTML to Image API](https://html2img.com). You design the card as an ordinary Twig template in your own project, with your own fonts and CSS. When an entry is saved, a queued job renders that template against the entry, sends the HTML to the API and stores the finished PNG. Real Chrome does the rendering, so what you see in your browser is what lands in the image.
 
@@ -18,7 +18,7 @@ No canvas editors, no drag and drop card builders, no per-seat pricing. A templa
 
 - Craft CMS 5.10 or later
 - PHP 8.3 or later
-- An HTML to Image API key. The free tier renews monthly, and the [pricing page](https://html2img.com/pricing) covers paid volumes.
+- An HTML to Image API key. New accounts get 50 free credits once, and the [pricing page](https://html2img.com/pricing) covers paid volumes.
 
 ## Installation
 
